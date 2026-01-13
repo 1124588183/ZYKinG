@@ -1,16 +1,12 @@
-name: MATLAB on self-hosted runner
+- name: List workspace
+  shell: powershell
+  run: |
+    chcp 65001
+    echo "GITHUB_WORKSPACE=$env:GITHUB_WORKSPACE"
+    dir
 
-on:
-  workflow_dispatch:
-  push:
-
-jobs:
-  run_matlab:
-    runs-on: [self-hosted, Windows, X64]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run main script
-        shell: powershell
-        run: |
-          matlab -batch "main_learning_rmpc"
+- name: Run main script (print MATLAB error)
+  shell: powershell
+  run: |
+    chcp 65001
+    matlab -batch "try; cd(getenv('GITHUB_WORKSPACE')); addpath(genpath(pwd)); disp(pwd); which main_learning_rmpc -all; main_learning_rmpc; catch e; disp(getReport(e,'extended','hyperlinks','off')); exit(1); end; exit(0);"
