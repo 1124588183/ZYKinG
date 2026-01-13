@@ -1,0 +1,16 @@
+name: MATLAB on self-hosted runner
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run_matlab:
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run main script
+        shell: pwsh
+        run: |
+          matlab -batch "main_learning_rmpc"
