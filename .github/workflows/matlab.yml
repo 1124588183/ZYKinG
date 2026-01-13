@@ -1,8 +1,8 @@
 name: MATLAB on self-hosted runner
 
 on:
-  push:
   workflow_dispatch:
+  push:
 
 jobs:
   run_matlab:
@@ -10,12 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Show MATLAB version
-        shell: pwsh
-        run: |
-          matlab -batch "ver; exit"
-
       - name: Run main script
-        shell: pwsh
+        shell: powershell
         run: |
           matlab -batch "main_learning_rmpc"
