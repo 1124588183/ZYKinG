@@ -1,8 +1,9 @@
 name: MATLAB on self-hosted runner
 
 on:
-  workflow_dispatch:
   push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   run_matlab:
@@ -10,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run main script (print MATLAB error)
+      - name: Run main (print MATLAB error)
         shell: powershell
         run: |
           chcp 65001
