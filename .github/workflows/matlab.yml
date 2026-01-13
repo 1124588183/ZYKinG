@@ -10,7 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run main script
+      - name: Run main script (print MATLAB error)
         shell: powershell
         run: |
-          matlab -batch "main_learning_rmpc"
+          chcp 65001
+          matlab -batch "try; cd(getenv('GITHUB_WORKSPACE')); addpath(genpath(pwd)); main_learning_rmpc; catch e; disp(getReport(e,'extended','hyperlinks','off')); exit(1); end; exit(0);"
